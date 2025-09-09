@@ -1,10 +1,10 @@
-# 🛡️ Zero-Trust Home DNS: Pi-hole + Unbound + DoH fallback (Quad9) + Hagezi Multi Pro
+# 🔒 Zero-Trust DNS Firewall: Pi-hole + Unbound + Quad9 DoH + Hagezi Multi Pro
 
-Turn a Raspberry Pi into a privacy-hardened, network-wide ad, tracker, and malware blocker that you control.  
-This guide is the full story: how ads actually work, why DNS filtering helps, what I built, how I built it, how I tested it, results, and key takeaways.
+Transform your Raspberry Pi into a privacy-first DNS firewall that slams the door on ads, trackers, malware, and telemetry—for all your personal devices.
+This is more than just a Pi-hole install; it’s a security architecture. Here’s the how and why, with a step-by-step breakdown, key lessons, and real-world results.
 
-> Hardware: Raspberry Pi 5, Ethernet to Xfinity gateway, storage on SSD  
-> Network goal: filter only my devices, not the entire household, while keeping the option to run a dedicated AP for my devices
+- Hardware: Raspberry Pi 5, Ethernet to router gateway, microSD for storage
+- Network goal: Filter only my own devices (not the whole home), with the flexibility to run a dedicated WiFi AP just for my gear.
 
 ---
 
@@ -78,21 +78,48 @@ A layered, privacy-first DNS stack that I control:
 ---
 
 ## Architecture diagrams
+```
++---------------------------------------------------------------------+
+|                          Your Network Devices                       |
+|       (Laptop, Phone, TV, IoT, etc — DNS set to Pi-hole IP)         |
++---------------------------------------------------------------------+
+                                  │
+                                  ▼
++---------------------------------------------------------------------+
+|                              PI-HOLE                                |
+|        - Checks each DNS query against blocklists (e.g. Hagezi)     |
+|        - BLOCKS ads, trackers, malware domains                      |
+|        - LOGS and stats for all DNS requests                        |
++---------------------------------------------------------------------+
+           │  (If domain is BLOCKED, request stops here: "Blocked")
+           │
+           │  (If domain is ALLOWED, forward request to Unbound)
+           ▼
++---------------------------------------------------------------------+
+|                           UNBOUND                                   |
+|    - Acts as a personal recursive DNS resolver                      |
+|    - Starts from ROOT DNS servers, walks down the chain             |
+|    - Validates all responses with DNSSEC (security check)           |
+|    - Keeps your DNS queries private (not leaked to public resolvers)|
++---------------------------------------------------------------------+
+           │  (If Unbound is DOWN or fails to resolve...)
+           │
+           ▼
++---------------------------------------------------------------------+
+|                         CLOUDFLARED (DoH)                           |
+|    - Fallback only!                                                 |
+|    - Sends DNS query to Quad9 over encrypted HTTPS (DoH)            |
+|    - Only used if Unbound fails, not in parallel ("strict-order")   |
++---------------------------------------------------------------------+
+           │
+           ▼
++---------------------------------------------------------------------+
+|                 Internet DNS Infrastructure                         |
+|        (Root Servers → TLD Servers → Authoritative Servers)         |
+|      - Actual answer is returned through Unbound/Pi-hole to Device  |
++---------------------------------------------------------------------+
 
 ```
-[Device] → Pi-hole (filter)
-```
-
-Optional AP-in-the-middle for just my devices:
-
-```
-Internet ⇄ Xfinity Gateway ⇄ Pi eth0
-                    ⇣
-         Pi wlan0 (hostapd SSID for my devices)
-         NAT + force DNS to Pi-hole
-```
-
----
 
 ## Roles of each tool
 
