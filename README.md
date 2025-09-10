@@ -272,7 +272,7 @@ Add DoH fallback to Pi-hole:
 
 The Pi-hole admin dashboard provides comprehensive network visibility and control.
 
-![Pi-hole Main Dashboard](screenshots/pihole-dashboard-main.png)  
+![Pi-hole Main Dashboard](media/image1.png)  
 *Main dashboard showing 5,161 total queries with 80.3% blocked (4,142 queries), and 440,402 domains on blocklists*
 
 The dashboard displays:
@@ -282,7 +282,7 @@ The dashboard displays:
 - **Query Type Distribution**: Breakdown of DNS record types (A, AAAA, PTR, HTTPS)
 - **Upstream Server Usage**: Visual representation of which resolvers are being used
 
-![Pi-hole Dashboard Extended View](screenshots/pihole-dashboard-extended.png)  
+![Pi-hole Dashboard Extended View](media/image9.png)  
 *Extended dashboard view showing top permitted domains (clientz.google.com, www.google.com) and top blocked domains (beacons.gvt2.com), plus client statistics*
 
 Key metrics visible:
@@ -296,7 +296,7 @@ Key metrics visible:
 
 Premium blocklists provide superior protection compared to default lists.
 
-![Blocklist Management Interface](screenshots/blocklist-management.png)  
+![Blocklist Management Interface](media/image2.png)  
 *Blocklist subscription interface showing StevenBlack hosts, OISD big, and OISD small lists configured and enabled*
 
 ### Adding Premium Blocklists
@@ -336,7 +336,7 @@ The interface shows:
 
 Advanced domain filtering provides granular control over network access.
 
-![Domain Management Interface](screenshots/domain-management.png)  
+![Domain Management Interface](media/image12.png)  
 *Domain management showing regex filters for Sentry, AdMaker, and exact blocks for major DNS providers like dns.google and cloudflare-dns.com*
 
 ### Enhanced Security Configuration
@@ -374,7 +374,7 @@ Key features:
 
 Comprehensive visibility into all network devices and their DNS activity.
 
-![Network Overview](screenshots/network-overview.png)  
+![Network Overview](media/image13.png)  
 *Network overview showing connected devices including Windows PC (10.0.0.10), localhost (127.0.0.1), and Raspberry Pi, with query counts and Pi-hole usage status*
 
 The network monitoring displays:
@@ -396,7 +396,7 @@ Device color coding:
 
 Real-time DNS query monitoring provides security insights and troubleshooting capabilities.
 
-![Live Query Log](screenshots/query-log-live.png)  
+![Live Query Log](media/image14.png)  
 *Live query log showing real-time DNS requests with timestamps, query types, domains, client IPs, and response times*
 
 ### Live Query Analysis
@@ -408,7 +408,7 @@ The query log reveals:
 - **Response Times**: Performance metrics for each query (0.3ms to 85.1ms range)
 - **Status Indicators**: Green checkmarks for allowed, red blocks for denied
 
-![Blocked Query Filter](screenshots/query-log-blocked.png)  
+![Blocked Query Filter](media/image15.png)  
 *Filtered view showing only blocked queries, displaying beacons5.gvt2.com and similar tracking domains being blocked in real-time*
 
 ### Blocked Query Analysis
@@ -431,7 +431,7 @@ This data helps identify:
 
 Terminal-based testing confirms all components function correctly.
 
-![Network Connectivity Test](screenshots/terminal-network-test.png)  
+![Network Connectivity Test](media/image16.png)  
 *Terminal showing successful ping to Pi-hole (10.0.0.53) and SSH connection, plus ifconfig output displaying network interface configuration*
 
 ### Basic Connectivity Tests
@@ -453,7 +453,7 @@ The output shows:
 - **Interface Status**: Ethernet (eth0) and WiFi (wlan0) configurations
 - **IP Configuration**: Proper network addressing and routing
 
-![Unbound DNS Testing](screenshots/terminal-unbound-test.png)  
+![Unbound DNS Testing](media/image6.png)  
 *dig command testing Unbound resolver on port 5335, successfully resolving pi-hole.net with 76ms response time and proper DNS flags*
 
 ### Unbound Functionality Test
@@ -469,7 +469,7 @@ Successful output shows:
 - **Server Response**: Unbound responding from 127.0.0.1#5335
 - **DNSSEC Ready**: Proper DNS flags and configuration
 
-![DNSSEC Validation Test](screenshots/terminal-dnssec-fail.png)  
+![DNSSEC Validation Test](media/image7.png)  
 *DNSSEC validation test showing sigfail.verteiltesysteme.net correctly failing validation with timeout - this confirms DNSSEC security is working*
 
 ### DNSSEC Security Validation
@@ -483,7 +483,7 @@ Expected security behavior:
 - **No IP Returned**: Security working as intended - malicious responses blocked
 - **Protection Active**: DNSSEC validation preventing DNS spoofing attacks
 
-![DoH Fallback Test](screenshots/terminal-doh-test.png)  
+![DoH Fallback Test](media/image8.png)  
 *cloudflared DoH fallback test on port 5053, successfully resolving example.com through Quad9 encrypted connection*
 
 ### DoH Fallback Verification
@@ -504,7 +504,7 @@ Fallback confirmation:
 
 Comprehensive testing validates blocking performance across different scenarios.
 
-![Ad-Blocking Test Basic](screenshots/adblock-test-basic.png)  
+![Ad-Blocking Test Basic](media/image10.png)  
 *AdBlock Tester showing 68 points out of 100 with DNS-only filtering, successfully blocking contextual advertising, analytics tools, banner advertising, and error monitoring*
 
 ### DNS-Level Blocking Results
@@ -522,7 +522,7 @@ This demonstrates DNS filtering effectiveness against:
 - Advertisement networks
 - Error reporting services (Sentry, Bugsnag)
 
-![Advanced Ad-Blocking Test](screenshots/adblock-test-advanced.png)  
+![Advanced Ad-Blocking Test](media/image11.png)  
 *TurtleCute ad-block test showing 95% effectiveness - 127 domains blocked out of 134 total, with only 7 not blocked*
 
 ### Comprehensive Blocking Analysis
@@ -533,8 +533,11 @@ The TurtleCute test provides detailed metrics:
 - **7 Not Blocked**: Likely same-site or inline content requiring browser-level blocking
 - **134 Total Tests**: Comprehensive evaluation across multiple ad/tracker types
 
-![Speed Test Comparison](screenshots/speedtest-comparison.png)  
-*Speedtest.net showing significant ad reduction - before and after comparison demonstrates fewer ads and tracking elements loading*
+![Speed Test Comparison](media/image3.png)  
+*Speedtest.net showing significant ad presence before Pi-hole implementation*
+
+![Speed Test Clean Interface](media/image4.png)  
+*Speedtest.net with reduced advertising elements after Pi-hole implementation*
 
 ### Real-World Performance Impact
 
@@ -556,7 +559,7 @@ The testing reveals DNS filtering provides:
 
 Verify that DNS queries remain private and don't leak to third-party resolvers.
 
-![DNS Leak Test Results](screenshots/dns-leak-test.png)  
+![DNS Leak Test Results](media/image5.png)  
 *DNS leak test showing only Comcast ISP resolver detected, confirming no DNS leaks to third-party services and proper local resolution*
 
 ### Privacy Validation Results
