@@ -490,7 +490,8 @@ This demonstrates DNS filtering effectiveness against:
 - Analytics services (Google Analytics, etc.)
 - Advertisement networks
 - Error reporting services (Sentry, Bugsnag)
-![Ad-Blocking Test Basic](media/image.png)  
+  
+![Ad-Blocking Test Basic](media/image15.png)  
 *AdBlock Tester showing 96 points out of 100 with DNS-only filtering, successfully blocking contextual advertising, analytics tools, banner advertising, and error monitoring*
 
 ### Comprehensive Blocking Analysis
