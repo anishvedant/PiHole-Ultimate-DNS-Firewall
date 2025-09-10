@@ -282,7 +282,7 @@ The dashboard displays:
 - **Query Type Distribution**: Breakdown of DNS record types (A, AAAA, PTR, HTTPS)
 - **Upstream Server Usage**: Visual representation of which resolvers are being used
 
-![Pi-hole Dashboard Extended View](media/image9.png)  
+![Pi-hole Dashboard Extended View](media/image2.png)  
 *Extended dashboard view showing top permitted domains (clientz.google.com, www.google.com) and top blocked domains (beacons.gvt2.com), plus client statistics*
 
 Key metrics visible:
@@ -296,7 +296,7 @@ Key metrics visible:
 
 Premium blocklists provide superior protection compared to default lists.
 
-![Blocklist Management Interface](media/image2.png)  
+![Blocklist Management Interface](media/image8.png)  
 *Blocklist subscription interface showing StevenBlack hosts, OISD big, and OISD small lists configured and enabled*
 
 ### Adding Premium Blocklists
@@ -336,7 +336,7 @@ The interface shows:
 
 Advanced domain filtering provides granular control over network access.
 
-![Domain Management Interface](media/image12.png)  
+![Domain Management Interface](media/image4.png)  
 *Domain management showing regex filters for Sentry, AdMaker, and exact blocks for major DNS providers like dns.google and cloudflare-dns.com*
 
 ### Enhanced Security Configuration
@@ -374,7 +374,7 @@ Key features:
 
 Comprehensive visibility into all network devices and their DNS activity.
 
-![Network Overview](media/image13.png)  
+![Network Overview](media/image5.png)  
 *Network overview showing connected devices including Windows PC (10.0.0.10), localhost (127.0.0.1), and Raspberry Pi, with query counts and Pi-hole usage status*
 
 The network monitoring displays:
