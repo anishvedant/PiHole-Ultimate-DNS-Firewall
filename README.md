@@ -1,4 +1,4 @@
-# 🛡️ Pi-hole DNS Security Stack: Complete Privacy & Ad-Blocking Solution
+# Pi-hole DNS Security Stack: Complete Privacy & Ad-Blocking Solution
 
 Transform your Raspberry Pi into an enterprise-grade DNS firewall that eliminates ads, trackers, malware, and telemetry across all your devices. This comprehensive guide builds a multi-layered security architecture combining Pi-hole, Unbound recursive DNS, encrypted DoH fallback, and premium blocklists.
 
