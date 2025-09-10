@@ -20,10 +20,8 @@ Transform your Raspberry Pi into an enterprise-grade DNS firewall that eliminate
 - [Domain Management and Filtering](#domain-management-and-filtering)
 - [Network Device Monitoring](#network-device-monitoring)
 - [Query Monitoring and Analysis](#query-monitoring-and-analysis)
-- [Command Line Testing and Validation](#command-line-testing-and-validation)
 - [Ad-Blocking Effectiveness Testing](#ad-blocking-effectiveness-testing)
 - [DNS Privacy and Leak Testing](#dns-privacy-and-leak-testing)
-- [Troubleshooting Guide](#troubleshooting-guide)
 - [Results and Performance](#results-and-performance)
 
 ---
@@ -396,7 +394,7 @@ Device color coding:
 
 Real-time DNS query monitoring provides security insights and troubleshooting capabilities.
 
-![Live Query Log](media/image14.png)  
+![Live Query Log](media/image6.png)  
 *Live query log showing real-time DNS requests with timestamps, query types, domains, client IPs, and response times*
 
 ### Live Query Analysis
@@ -408,7 +406,7 @@ The query log reveals:
 - **Response Times**: Performance metrics for each query (0.3ms to 85.1ms range)
 - **Status Indicators**: Green checkmarks for allowed, red blocks for denied
 
-![Blocked Query Filter](media/image15.png)  
+![Blocked Query Filter](media/image7.png)  
 *Filtered view showing only blocked queries, displaying beacons5.gvt2.com and similar tracking domains being blocked in real-time*
 
 ### Blocked Query Analysis
@@ -427,35 +425,6 @@ This data helps identify:
 
 ---
 
-## Command Line Testing and Validation
-
-Terminal-based testing confirms all components function correctly.
-
-![Network Connectivity Test](media/image16.png)  
-*Terminal showing successful ping to Pi-hole (10.0.0.53) and SSH connection, plus ifconfig output displaying network interface configuration*
-
-### Basic Connectivity Tests
-
-```bash
-# Test Pi-hole connectivity
-ping 10.0.0.53
-
-# SSH access to Pi-hole
-ssh anishvedant@10.0.0.53
-
-# Check network interfaces
-ifconfig
-```
-
-The output shows:
-- **Successful Ping**: 0% packet loss to Pi-hole IP
-- **SSH Access**: Successful remote terminal connection
-- **Interface Status**: Ethernet (eth0) and WiFi (wlan0) configurations
-- **IP Configuration**: Proper network addressing and routing
-
-![Unbound DNS Testing](media/image6.png)  
-*dig command testing Unbound resolver on port 5335, successfully resolving pi-hole.net with 76ms response time and proper DNS flags*
-
 ### Unbound Functionality Test
 
 ```bash
@@ -469,8 +438,9 @@ Successful output shows:
 - **Server Response**: Unbound responding from 127.0.0.1#5335
 - **DNSSEC Ready**: Proper DNS flags and configuration
 
-![DNSSEC Validation Test](media/image7.png)  
-*DNSSEC validation test showing sigfail.verteiltesysteme.net correctly failing validation with timeout - this confirms DNSSEC security is working*
+
+![Unbound DNS Testing](media/image12.png)  
+*dig command testing Unbound resolver on port 5335, successfully resolving pi-hole.net with 76ms response time and proper DNS flags*
 
 ### DNSSEC Security Validation
 
@@ -483,14 +453,16 @@ Expected security behavior:
 - **No IP Returned**: Security working as intended - malicious responses blocked
 - **Protection Active**: DNSSEC validation preventing DNS spoofing attacks
 
-![DoH Fallback Test](media/image8.png)  
-*cloudflared DoH fallback test on port 5053, successfully resolving example.com through Quad9 encrypted connection*
+![DNSSEC Validation Test](media/image13.png)  
+*DNSSEC validation test showing sigfail.verteiltesysteme.net correctly failing validation with timeout - this confirms DNSSEC security is working*
 
 ### DoH Fallback Verification
 
 ```bash
 dig example.com @127.0.0.1 -p 5053
 ```
+![DoH Fallback Test](media/image14.png)  
+*cloudflared DoH fallback test on port 5053, successfully resolving example.com through Quad9 encrypted connection*
 
 Fallback confirmation:
 - **SERVFAIL Status**: Indicates cloudflared is working but recursion not available (expected)
@@ -504,13 +476,10 @@ Fallback confirmation:
 
 Comprehensive testing validates blocking performance across different scenarios.
 
-![Ad-Blocking Test Basic](media/image10.png)  
-*AdBlock Tester showing 68 points out of 100 with DNS-only filtering, successfully blocking contextual advertising, analytics tools, banner advertising, and error monitoring*
-
 ### DNS-Level Blocking Results
 
 The AdBlock Tester results show:
-- **68/100 Points**: Strong DNS-level protection
+- **96/100 Points**: Strong DNS-level protection
 - **Contextual Advertising**: Blocked (Medium difficulty)
 - **Analytics Tools**: Blocked (Medium difficulty)  
 - **Banner Advertising**: Blocked (Low difficulty)
@@ -521,9 +490,8 @@ This demonstrates DNS filtering effectiveness against:
 - Analytics services (Google Analytics, etc.)
 - Advertisement networks
 - Error reporting services (Sentry, Bugsnag)
-
-![Advanced Ad-Blocking Test](media/image11.png)  
-*TurtleCute ad-block test showing 95% effectiveness - 127 domains blocked out of 134 total, with only 7 not blocked*
+![Ad-Blocking Test Basic](media/image.png)  
+*AdBlock Tester showing 96 points out of 100 with DNS-only filtering, successfully blocking contextual advertising, analytics tools, banner advertising, and error monitoring*
 
 ### Comprehensive Blocking Analysis
 
@@ -533,10 +501,13 @@ The TurtleCute test provides detailed metrics:
 - **7 Not Blocked**: Likely same-site or inline content requiring browser-level blocking
 - **134 Total Tests**: Comprehensive evaluation across multiple ad/tracker types
 
-![Speed Test Comparison](media/image3.png)  
+![Advanced Ad-Blocking Test](media/image3.png)  
+*TurtleCute ad-block test showing 95% effectiveness - 127 domains blocked out of 134 total, with only 7 not blocked*
+
+![Speed Test Comparison](media/image9.png)  
 *Speedtest.net showing significant ad presence before Pi-hole implementation*
 
-![Speed Test Clean Interface](media/image4.png)  
+![Speed Test Clean Interface](media/image10.png)  
 *Speedtest.net with reduced advertising elements after Pi-hole implementation*
 
 ### Real-World Performance Impact
@@ -559,7 +530,7 @@ The testing reveals DNS filtering provides:
 
 Verify that DNS queries remain private and don't leak to third-party resolvers.
 
-![DNS Leak Test Results](media/image5.png)  
+![DNS Leak Test Results](media/image11.png)  
 *DNS leak test showing only Comcast ISP resolver detected, confirming no DNS leaks to third-party services and proper local resolution*
 
 ### Privacy Validation Results
@@ -580,75 +551,6 @@ This confirms the privacy architecture is working:
 1. **Primary**: Unbound resolves directly from root servers (private)
 2. **Fallback**: Encrypted DoH to Quad9 when needed (encrypted)
 3. **No Leaks**: Browser and OS DNS settings properly configured
-
----
-
-## Troubleshooting Guide
-
-Common issues and their solutions based on real-world deployment experience.
-
-### DNS Resolution Issues
-
-**Problem**: Clients not using Pi-hole for DNS
-- **Check**: Client DNS settings point to Pi-hole IP
-- **Verify**: No secure DNS enabled in browser/OS  
-- **Test**: `nslookup domain.com <pi-ip>` from client
-
-**Problem**: Some queries bypassing Pi-hole
-- **Cause**: IPv6 DNS or secure DNS enabled
-- **Solution**: Disable IPv6 or configure Pi-hole IPv6, turn off DoH/DoT
-
-### Service Status Issues
-
-**Problem**: Unbound not responding
-- **Check**: `sudo systemctl status unbound`
-- **Logs**: `sudo journalctl -u unbound -f`
-- **Config**: Verify `/etc/unbound/unbound.conf.d/pi-hole.conf`
-
-**Problem**: Cloudflared proxy-dns failing
-- **Verify**: Service uses `proxy-dns` mode, not tunnel mode
-- **Check**: Port 5053 not conflicting with other services
-- **Restart**: `sudo systemctl restart cloudflared-proxy-dns`
-
-### Performance and Blocking Issues
-
-**Problem**: Slow DNS resolution
-- **Optimize**: Unbound cache settings in config
-- **Check**: Network connectivity to root servers
-- **Monitor**: Pi-hole query response times
-
-**Problem**: Legitimate sites being blocked
-- **Identify**: Check Pi-hole query logs for blocked domains
-- **Whitelist**: Add necessary domains to whitelist
-- **Review**: Blocklist configuration for over-blocking
-
-### Command Reference
-
-```bash
-# System status and updates
-sudo apt update && sudo apt upgrade -y
-pihole status
-pihole -v
-
-# DNS service management
-sudo pihole restartdns
-pihole enable/disable
-
-# Blocklist management
-pihole -g                    # Update gravity/blocklists
-pihole -w domain.com         # Whitelist domain
-pihole -b domain.com         # Blacklist domain
-
-# Query and log management
-pihole -t                    # Tail live queries
-pihole -q domain.com         # Query domain status
-pihole flush                 # Flush logs
-
-# Service status checks
-sudo systemctl status pihole-FTL
-sudo systemctl status unbound
-sudo systemctl status cloudflared-proxy-dns
-```
 
 ---
 
